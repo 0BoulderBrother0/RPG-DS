@@ -2,8 +2,9 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - HighGrass
   layers:
   - Default
   - TransparentFX
@@ -41,3 +42,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 3140332955
+    locked: 0
+  - name: HighGrass
+    uniqueID: 1071244659
+    locked: 0
+  - name: OnGround
+    uniqueID: 3000301059
+    locked: 0
+  - name: AboveGround
+    uniqueID: 2751566803
+    locked: 0
+  - name: Obstruction
+    uniqueID: 3468072977
+    locked: 0
+  - name: Player
+    uniqueID: 1474484105
+    locked: 0
+  - name: Foreground
+    uniqueID: 3309961329
+    locked: 0
+  - name: AboveForeground
+    uniqueID: 2682079627
+    locked: 0
+  m_RenderingLayers:
+  - Default
