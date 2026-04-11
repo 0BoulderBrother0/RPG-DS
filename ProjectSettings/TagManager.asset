@@ -57,6 +57,9 @@ TagManager:
   - name: Obstruction
     uniqueID: 3468072977
     locked: 0
+  - name: OnObstruction
+    uniqueID: 1600570021
+    locked: 0
   - name: Player
     uniqueID: 1474484105
     locked: 0
