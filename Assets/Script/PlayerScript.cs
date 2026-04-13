@@ -55,11 +55,13 @@ public class PlayerScript : MonoBehaviour
         
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("HighGrass"))
         {
             speed = moveSpeed * highGrassSpeedReduction;
+            animator.speed = 1 * highGrassSpeedReduction;
         }
     }
 
@@ -68,6 +70,8 @@ public class PlayerScript : MonoBehaviour
         if (collision.CompareTag("HighGrass"))
         {
             speed = moveSpeed;
+            animator.speed = 1;
         }
     }
+
 }
