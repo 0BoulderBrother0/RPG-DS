@@ -4886,6 +4886,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   boar: {fileID: 8942670370251707738, guid: 5c2fd4a94562f95418cc9ca1fb433544, type: 3}
   boarSpawnInterval: 8
+  minNumberOfBoars: 1
+  maxNumberOfBoars: 6
+  boarSpawnSpread: 3
+  turnInvisibleRate: 0.3
 --- !u!4 &1513660808
 Transform:
   m_ObjectHideFlags: 0
@@ -5112,7 +5116,7 @@ GameObject:
   - component: {fileID: 1762714921}
   m_Layer: 0
   m_Name: Global Light 2D
-  m_TagString: Untagged
+  m_TagString: GlobalLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5129,11 +5133,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c9bdef80aaa305a88351996118c8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  eventsWhenDuskStrikes:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1513660807}
+        m_TargetAssemblyTypeName: BoarManagerScript, Assembly-CSharp
+        m_MethodName: InitializeSpawnBoars
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  eventsAfterDusk:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1513660807}
+        m_TargetAssemblyTypeName: BoarManagerScript, Assembly-CSharp
+        m_MethodName: StopSpawnBoars
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   daylightIntensity: 1
   eveninglightIntensity: 0.1
-  intensityChange: 0.01
-  timeBetweenIntensityChanges: 0.02
-  secondsBetween: 5
+  intensityChange: 0.001
+  timeBetweenIntensityChanges: 0.005
+  secondsBetween: 30
 --- !u!114 &1762714922
 MonoBehaviour:
   m_ObjectHideFlags: 0
