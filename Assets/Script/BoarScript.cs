@@ -41,7 +41,7 @@ public class BoarScript : MonoBehaviour
     {
         if (collision.CompareTag("HighGrass"))
         {
-            speed = boarSpeed * highGrassSpeedReduction;
+            speed = boarSpeed;
             animator.speed = 1 * highGrassSpeedReduction;
         }
     }

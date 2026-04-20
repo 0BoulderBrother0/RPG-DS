@@ -1,3 +1,5 @@
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -11,6 +13,11 @@ public class PlayerScript : MonoBehaviour
 
     Rigidbody2D rb;
     Animator animator;
+
+    [Header("Cabbage")]
+    public GameObject cabbageObject;
+    public float cabbageThrowSpeed;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -53,6 +60,18 @@ public class PlayerScript : MonoBehaviour
             animator.Play("player_down");
         }
         
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            Vector2 playerPos = transform.position;
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mouseDirection = (mousePos - playerPos).normalized;
+
+            GameObject newCabbage = Instantiate(cabbageObject, playerPos + mouseDirection, Quaternion.identity);
+
+            newCabbage.transform.right = mouseDirection;
+            newCabbage.GetComponent<Rigidbody2D>().linearVelocity = mouseDirection * cabbageThrowSpeed;
+        }
     }
 
 

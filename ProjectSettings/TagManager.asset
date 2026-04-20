@@ -61,6 +61,9 @@ TagManager:
   - name: OnObstruction
     uniqueID: 1600570021
     locked: 0
+  - name: Entity
+    uniqueID: 220008449
+    locked: 0
   - name: Player
     uniqueID: 1474484105
     locked: 0
