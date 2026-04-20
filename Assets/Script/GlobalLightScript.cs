@@ -1,12 +1,18 @@
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class GlobalLightScript : MonoBehaviour
 {
 
     Light2D light2D;
+
+    public UnityEvent eventsWhenDuskStrikes;
+
+    public UnityEvent eventsAfterDusk;
+
 
     public float daylightIntensity = 1;
     public float eveninglightIntensity = 0.1f;
@@ -45,6 +51,8 @@ public class GlobalLightScript : MonoBehaviour
         isEvening = !isEvening;
     }
 
+
+
     IEnumerator Dusk()
     {
         while (light2D.intensity > eveninglightIntensity)
@@ -52,9 +60,11 @@ public class GlobalLightScript : MonoBehaviour
             light2D.intensity -= intensityChange;
             yield return new WaitForSeconds(timeBetweenIntensityChanges);
         }
+        eventsWhenDuskStrikes.Invoke();
     }
     IEnumerator Dawn()
     {
+        eventsAfterDusk.Invoke();
         while (light2D.intensity < daylightIntensity)
         {
             light2D.intensity += intensityChange;
