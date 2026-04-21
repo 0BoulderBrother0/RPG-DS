@@ -20,6 +20,11 @@ public class PlayerScript : MonoBehaviour
     public float cabbageRotationSpeed;
 
 
+    bool wateringPlant;
+    bool haltMovement;
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -48,17 +53,10 @@ public class PlayerScript : MonoBehaviour
     {
         if (rb.linearVelocity == Vector2.zero)
         {
-            animator.Play("player_idle");
-        }
+            xAxis = Input.GetAxisRaw("Horizontal");
+            yAxis = Input.GetAxisRaw("Vertical");
 
-        else if (rb.linearVelocityX > 0)
-        {
-            animator.Play("player_right");
-        }
-        else if (rb.linearVelocityX < 0)
-        {
-            animator.Play("player_left");
-        }
+            rb.linearVelocity = new Vector2(xAxis, yAxis) * speed;
 
         else if (rb.linearVelocityY > 0)
         {
@@ -92,6 +90,7 @@ public class PlayerScript : MonoBehaviour
 
         newCabbageRB.linearVelocity = mouseDirection * cabbageThrowSpeed;
     }
+    
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -109,6 +108,18 @@ public class PlayerScript : MonoBehaviour
         {
             speed = moveSpeed;
             animator.speed = 1;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Plant") && Input.GetKeyUp(KeyCode.Space))
+        { 
+            if (collision.GetComponent<PlantScript>().state == 0) 
+            {
+                collision.GetComponent<PlantScript>().WaterPlant();
+                Debug.Log("Plant");
+            }
         }
     }
 
