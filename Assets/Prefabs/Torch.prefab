@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6459865029954516278}
   - component: {fileID: 1611604042237226923}
   - component: {fileID: 1226601453944214805}
+  - component: {fileID: 5065624569373632501}
   m_Layer: 0
   m_Name: Torch
   m_TagString: Untagged
@@ -134,7 +135,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 000000009bad2dbb73e5d93f03f6d4b2d39301a41198b6cea5c2665f89d7e25771004ac58b49dd9f
+  m_ApplyToSortingLayers: 000000009bad2dbb73e5d93f03f6d4b2d39301a41198b6cea5c2665f89d7e25771004ac58b49dd9f01101d0d
   m_LightCookieSprite: {fileID: 3501655898386836074, guid: 83962d9d908816c46ad01fbd2f641ece, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -166,3 +167,40 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!70 &5065624569373632501
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3267985193010449381}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.4, y: 0.9}
+  m_Direction: 0

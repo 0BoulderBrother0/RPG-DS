@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3153585204115432460}
   - component: {fileID: -8491469455482876788}
   - component: {fileID: -640522240814967271}
-  m_Layer: 0
+  - component: {fileID: -1365938124671886493}
+  m_Layer: 7
   m_Name: Cabbage
-  m_TagString: Untagged
+  m_TagString: Cabbage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.605, y: 2.533, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -155,3 +156,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-1365938124671886493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917535368348540530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e85d9a844f833b7e8082475c869fb4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  decayRate: 20
+  decayAmount: 0.1

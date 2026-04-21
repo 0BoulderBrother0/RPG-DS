@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4406579450491121553}
   - component: {fileID: 4422917434811095715}
   - component: {fileID: 765478168451173662}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -137,7 +137,8 @@ MonoBehaviour:
   moveSpeed: 3
   highGrassSpeedReduction: 0.5
   cabbageObject: {fileID: 917535368348540530, guid: bcf708b404351149e9bb799362ad901d, type: 3}
-  cabbageThrowSpeed: 4
+  cabbageThrowSpeed: 9
+  cabbageRotationSpeed: 25
 --- !u!95 &4406579450491121553
 Animator:
   serializedVersion: 7
@@ -194,7 +195,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -1.08}
+  m_Offset: {x: 0, y: -0.9754369}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -204,7 +205,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.42, y: 0.5}
+  m_Size: {x: 1.55, y: 0.64912605}
   m_EdgeRadius: 0
 --- !u!114 &765478168451173662
 MonoBehaviour:
@@ -226,36 +227,36 @@ MonoBehaviour:
   m_CastsShadows: 1
   m_SelfShadows: 0
   m_AlphaCutoff: 0.1
-  m_ApplyToSortingLayers: 000000009bad2dbb73e5d93f03f6d4b2d39301a41198b6cea5c2665f01101d0d89d7e25771004ac58b49dd9f
+  m_ApplyToSortingLayers: 000000009bad2dbb73e5d93f03f6d4b2d39301a41198b6cea5c2665f
   m_ShapePath:
-  - {x: -1.0937501, y: -1.34375, z: 0}
-  - {x: -1.0937501, y: 1.34375, z: 0}
-  - {x: 1.09375, y: 1.34375, z: 0}
-  - {x: 1.09375, y: -1.34375, z: 0}
-  m_ShapePathHash: 0
+  - {x: -0.7, y: -1.3248601, z: 0}
+  - {x: -0.7, y: 0, z: 0}
+  - {x: 0.7, y: 1.34375, z: 0}
+  - {x: 0.7, y: -1.3295827, z: 0}
+  m_ShapePathHash: -989123487
   m_InstanceId: 0
   m_ShadowShape2DComponent: {fileID: 4422917434811095715}
   m_ShadowShape2DProvider:
-    rid: 9218768807467155552
+    rid: 9218768850237784146
   m_ShadowCastingSource: 2
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
+      m_Center: {x: 0, y: -0.9754257, z: 0}
+      m_Extent: {x: 0.6749878, y: 0.22455597, z: 0}
     m_EdgeProcessing: 1
-    m_TrimEdge: 0.3
+    m_TrimEdge: 0.1
     m_FlipX: 0
     m_FlipY: 0
     m_InitialTrim: 0
   m_CastingOption: 1
-  m_PreviousTrimEdge: 0.3
+  m_PreviousTrimEdge: 0.1
   m_PreviousEdgeProcessing: 1
   m_PreviousShadowCastingSource: 2
   m_PreviousShadowShape2DSource: {fileID: 4422917434811095715}
   references:
     version: 2
     RefIds:
-    - rid: 9218768807467155552
+    - rid: 9218768850237784146
       type: {class: ShadowShape2DProvider_Collider2D, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 

@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     [Header("Cabbage")]
     public GameObject cabbageObject;
     public float cabbageThrowSpeed;
+    public float cabbageRotationSpeed;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,9 +35,17 @@ public class PlayerScript : MonoBehaviour
         yAxis = Input.GetAxisRaw("Vertical");
 
         rb.linearVelocity = new Vector2(xAxis, yAxis) * speed;
+        PlayAnimations();
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            ThrowCabbage();
+        }
+    }
 
 
-        // ---- Player animator ----
+    void PlayAnimations()
+    {
         if (rb.linearVelocity == Vector2.zero)
         {
             animator.Play("player_idle");
@@ -59,19 +68,29 @@ public class PlayerScript : MonoBehaviour
         {
             animator.Play("player_down");
         }
-        
+    }
 
-        if (Input.GetKeyUp(KeyCode.E))
+    void ThrowCabbage()
+    {
+        Vector2 playerPos = transform.position;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseDirection = (mousePos - playerPos).normalized;
+
+        GameObject newCabbage = Instantiate(cabbageObject, playerPos + mouseDirection, Quaternion.identity);
+        Rigidbody2D newCabbageRB = newCabbage.GetComponent<Rigidbody2D>();
+
+        if (mouseDirection.x < 0)
         {
-            Vector2 playerPos = transform.position;
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mouseDirection = (mousePos - playerPos).normalized;
-
-            GameObject newCabbage = Instantiate(cabbageObject, playerPos + mouseDirection, Quaternion.identity);
-
-            newCabbage.transform.right = mouseDirection;
-            newCabbage.GetComponent<Rigidbody2D>().linearVelocity = mouseDirection * cabbageThrowSpeed;
+            newCabbage.transform.right = -mouseDirection;
+            newCabbageRB.AddTorque(-cabbageRotationSpeed);
         }
+        else
+        {
+            newCabbage.transform.right = mouseDirection;
+            newCabbageRB.AddTorque(cabbageRotationSpeed);
+        }
+
+        newCabbageRB.linearVelocity = mouseDirection * cabbageThrowSpeed;
     }
 
 

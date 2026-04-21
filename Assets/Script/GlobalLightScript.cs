@@ -21,7 +21,7 @@ public class GlobalLightScript : MonoBehaviour
     public float timeBetweenIntensityChanges = 1;
     public float secondsBetween = 2;
 
-    bool isEvening;
+    public bool isEvening = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
