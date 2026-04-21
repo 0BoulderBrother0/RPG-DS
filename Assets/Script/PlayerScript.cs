@@ -53,22 +53,34 @@ public class PlayerScript : MonoBehaviour
     {
         if (rb.linearVelocity == Vector2.zero)
         {
-            xAxis = Input.GetAxisRaw("Horizontal");
-            yAxis = Input.GetAxisRaw("Vertical");
+            animator.Play("player_idle");
+        }
 
-            rb.linearVelocity = new Vector2(xAxis, yAxis) * speed;
 
         else if (rb.linearVelocityY > 0)
         {
+
             animator.Play("player_up");
         }
-        else if (rb.linearVelocityY < 0)
+
+        else if (rb.linearVelocityY < 0) 
         {
             animator.Play("player_down");
         }
+
+
+        else if (rb.linearVelocityX > 0)
+        {
+            animator.Play("player_right");
+        }
+
+        else if (rb.linearVelocityX < 0)
+        {
+            animator.Play("player_left");
+        }
     }
 
-    void ThrowCabbage()
+    private void ThrowCabbage()
     {
         Vector2 playerPos = transform.position;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -90,7 +102,7 @@ public class PlayerScript : MonoBehaviour
 
         newCabbageRB.linearVelocity = mouseDirection * cabbageThrowSpeed;
     }
-    
+
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -114,8 +126,8 @@ public class PlayerScript : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Plant") && Input.GetKeyUp(KeyCode.Space))
-        { 
-            if (collision.GetComponent<PlantScript>().state == 0) 
+        {
+            if (collision.GetComponent<PlantScript>().state == 0)
             {
                 collision.GetComponent<PlantScript>().WaterPlant();
                 Debug.Log("Plant");

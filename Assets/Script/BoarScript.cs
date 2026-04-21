@@ -33,7 +33,14 @@ public class BoarScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isInHighGrass)
+        {
+            animator.speed = Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease * highGrassSpeedReduction;
+        }
+        else
+        {
+            animator.speed = Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -70,7 +77,7 @@ public class BoarScript : MonoBehaviour
             rb.linearVelocity = collision.collider.GetComponent<Rigidbody2D>().linearVelocity;
         }
 
-
+        /*
         if (rb.linearVelocityX > 0)
         {
             sr.flipX = true;
@@ -95,6 +102,6 @@ public class BoarScript : MonoBehaviour
         else
         {
             animator.speed = animator.speed + Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease;
-        }
+        }*/
     }
 }

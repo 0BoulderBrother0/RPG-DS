@@ -213,5 +213,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   boarSpeed: {x: -2, y: 0}
   highGrassSpeedReduction: 0.5
-  animationSpeedIncrease: 0.1
+  animationSpeedIncrease: 0.01
   speedThresholdForIdle: 0.05
