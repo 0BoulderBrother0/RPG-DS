@@ -6,6 +6,8 @@ TagManager:
   tags:
   - HighGrass
   - GlobalLight
+  - Boar
+  - Plant
   layers:
   - Default
   - TransparentFX

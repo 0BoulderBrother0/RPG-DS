@@ -19,6 +19,11 @@ public class PlayerScript : MonoBehaviour
     public float cabbageThrowSpeed;
 
 
+    bool wateringPlant;
+    bool haltMovement;
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,47 +35,50 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        xAxis = Input.GetAxisRaw("Horizontal");
-        yAxis = Input.GetAxisRaw("Vertical");
-
-        rb.linearVelocity = new Vector2(xAxis, yAxis) * speed;
-
-
-        // ---- Player animator ----
-        if (rb.linearVelocity == Vector2.zero)
+        if (haltMovement == false)
         {
-            animator.Play("player_idle");
-        }
+            xAxis = Input.GetAxisRaw("Horizontal");
+            yAxis = Input.GetAxisRaw("Vertical");
 
-        else if (rb.linearVelocityX > 0)
-        {
-            animator.Play("player_right");
-        }
-        else if (rb.linearVelocityX < 0)
-        {
-            animator.Play("player_left");
-        }
+            rb.linearVelocity = new Vector2(xAxis, yAxis) * speed;
 
-        else if (rb.linearVelocityY > 0)
-        {
-            animator.Play("player_up");
-        }
-        else if (rb.linearVelocityY < 0)
-        {
-            animator.Play("player_down");
-        }
-        
 
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            Vector2 playerPos = transform.position;
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mouseDirection = (mousePos - playerPos).normalized;
+            // ---- Player animator ----
+            if (rb.linearVelocity == Vector2.zero)
+            {
+                animator.Play("player_idle");
+            }
 
-            GameObject newCabbage = Instantiate(cabbageObject, playerPos + mouseDirection, Quaternion.identity);
+            else if (rb.linearVelocityX > 0)
+            {
+                animator.Play("player_right");
+            }
+            else if (rb.linearVelocityX < 0)
+            {
+                animator.Play("player_left");
+            }
 
-            newCabbage.transform.right = mouseDirection;
-            newCabbage.GetComponent<Rigidbody2D>().linearVelocity = mouseDirection * cabbageThrowSpeed;
+            else if (rb.linearVelocityY > 0)
+            {
+                animator.Play("player_up");
+            }
+            else if (rb.linearVelocityY < 0)
+            {
+                animator.Play("player_down");
+            }
+
+
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                Vector2 playerPos = transform.position;
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mouseDirection = (mousePos - playerPos).normalized;
+
+                GameObject newCabbage = Instantiate(cabbageObject, playerPos + mouseDirection, Quaternion.identity);
+
+                newCabbage.transform.right = mouseDirection;
+                newCabbage.GetComponent<Rigidbody2D>().linearVelocity = mouseDirection * cabbageThrowSpeed;
+            }
         }
     }
 
@@ -90,6 +98,18 @@ public class PlayerScript : MonoBehaviour
         {
             speed = moveSpeed;
             animator.speed = 1;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Plant") && Input.GetKeyUp(KeyCode.Space))
+        { 
+            if (collision.GetComponent<PlantScript>().state == 0) 
+            {
+                collision.GetComponent<PlantScript>().WaterPlant();
+                Debug.Log("Plant");
+            }
         }
     }
 
