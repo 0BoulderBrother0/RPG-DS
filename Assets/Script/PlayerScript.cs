@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject cabbageObject;
     public float cabbageThrowSpeed;
     public float cabbageRotationSpeed;
+    public float secondsStartCabbageDecay = 3;
 
 
     bool wateringPlant;
@@ -101,6 +103,19 @@ public class PlayerScript : MonoBehaviour
         }
 
         newCabbageRB.linearVelocity = mouseDirection * cabbageThrowSpeed;
+        StartCoroutine(StartDecayCabbage(newCabbage));
+    }
+
+    IEnumerator StartDecayCabbage(GameObject cabbage)
+    {
+        CabbageScript cs = cabbage.GetComponent<CabbageScript>();
+
+        yield return new WaitForSeconds(secondsStartCabbageDecay);
+
+        if (cs.decayCabbage == null)
+        {
+            cs.decayCabbage = StartCoroutine(cs.DecayCabbage());
+        }
     }
 
 

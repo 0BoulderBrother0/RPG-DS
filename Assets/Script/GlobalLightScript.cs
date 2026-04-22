@@ -26,6 +26,7 @@ public class GlobalLightScript : MonoBehaviour
     void Start()
     {
        light2D = GetComponent<Light2D>();
+       light2D.intensity = 0.1f;
        InvokeRepeating("ToggleDuskDawn", 0, secondsBetween);
     }
 

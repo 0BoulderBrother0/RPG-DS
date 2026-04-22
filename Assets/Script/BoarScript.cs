@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.Rendering;
 
 public class BoarScript : MonoBehaviour
@@ -10,12 +11,22 @@ public class BoarScript : MonoBehaviour
     Animator animator;
     SpriteRenderer sr;
 
+    List<GameObject> activeBoars;
+    int activeBoarIndex;
 
+    Coroutine fadeBoar;
+    public bool isFading = false;
+
+    Coroutine calculateStandingStill;
+
+
+    [Header("Boar Speed")]
     public Vector2 boarSpeed = new Vector2(-2, 0);
     public float highGrassSpeedReduction = 0.5f;
     bool isInHighGrass;
     public float animationSpeedIncrease;
     public float speedThresholdForIdle = 0.1f;
+    public float boarCabbageReactSpeed = 2;
 
 
     bool hasCollidedWithCabbage = false;
@@ -27,20 +38,23 @@ public class BoarScript : MonoBehaviour
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
 
+        activeBoars = GameObject.FindGameObjectWithTag("BoarManager").GetComponent<BoarManagerScript>().activeBoars;
+
+
         rb.linearVelocity = boarSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isInHighGrass)
+
+        animator.speed = Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease;
+
+        if (rb.linearVelocity.magnitude <= speedThresholdForIdle && calculateStandingStill == null)
         {
-            animator.speed = Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease * highGrassSpeedReduction;
+            calculateStandingStill = StartCoroutine(CalculateStandingStill());
         }
-        else
-        {
-            animator.speed = Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease;
-        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -48,7 +62,6 @@ public class BoarScript : MonoBehaviour
         if (collision.CompareTag("HighGrass"))
         {
             rb.linearVelocity = rb.linearVelocity * highGrassSpeedReduction;
-            animator.speed = animator.speed * highGrassSpeedReduction;
             isInHighGrass = true;
         }
     }
@@ -58,7 +71,6 @@ public class BoarScript : MonoBehaviour
         if (collision.CompareTag("HighGrass"))
         {
             rb.linearVelocity = rb.linearVelocity / highGrassSpeedReduction;
-            animator.speed = animator.speed / highGrassSpeedReduction;
             isInHighGrass = false;
         }
     }
@@ -69,15 +81,15 @@ public class BoarScript : MonoBehaviour
         if (collision.collider.CompareTag("Cabbage") && hasCollidedWithCabbage == false && isInHighGrass)
         {
             hasCollidedWithCabbage = true;
-            rb.linearVelocity = collision.collider.GetComponent<Rigidbody2D>().linearVelocity * highGrassSpeedReduction;
+            rb.linearVelocity = collision.collider.GetComponent<Rigidbody2D>().linearVelocity * highGrassSpeedReduction * boarCabbageReactSpeed;
         }
         else if (collision.collider.CompareTag("Cabbage") && hasCollidedWithCabbage == false)
         {
             hasCollidedWithCabbage = true;
-            rb.linearVelocity = collision.collider.GetComponent<Rigidbody2D>().linearVelocity;
+            rb.linearVelocity = collision.collider.GetComponent<Rigidbody2D>().linearVelocity * boarCabbageReactSpeed;
         }
 
-        /*
+
         if (rb.linearVelocityX > 0)
         {
             sr.flipX = true;
@@ -86,22 +98,59 @@ public class BoarScript : MonoBehaviour
         {
             sr.flipX = false;
         }
+    }
 
-        if (animator.speed + Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease < 0 || rb.linearVelocity.magnitude < speedThresholdForIdle)
+    IEnumerator CalculateStandingStill()
+    {
+        int seconds = 0;
+
+        while (seconds < 3)
         {
-            animator.speed = 0;
+            if (rb.linearVelocity.magnitude > speedThresholdForIdle)
+            {
+                calculateStandingStill = null;
+                yield break;
+            }
 
-            rb.linearVelocity = Vector2.zero;
-
-            // Spela idle animation här!
+            seconds++;
+            yield return new WaitForSeconds(1);
         }
-        else if (isInHighGrass)
+
+        StartFade();
+
+        calculateStandingStill = null;
+    }
+
+    public void StartFade()
+{
+    if (isFading == false)
+    {
+        if (calculateStandingStill != null)
         {
-            animator.speed = (animator.speed + Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease) * highGrassSpeedReduction;
+            StopCoroutine(calculateStandingStill);
+            calculateStandingStill = null;
         }
-        else
+        fadeBoar = StartCoroutine(FadeBoar());
+    }
+}
+
+    IEnumerator FadeBoar()
+    {
+        isFading = true;
+        float currentAlpha = 1f;
+
+        float turnInvisibleRate = GameObject.FindGameObjectWithTag("BoarManager").GetComponent<BoarManagerScript>().turnInvisibleRate;
+
+        while (currentAlpha > 0f)
         {
-            animator.speed = animator.speed + Mathf.Abs(rb.linearVelocity.magnitude) * animationSpeedIncrease;
-        }*/
+            currentAlpha = Mathf.Max(0f, currentAlpha - turnInvisibleRate * Time.deltaTime);
+            Color boarColor = sr.color;
+            boarColor.a = currentAlpha;
+            sr.color = boarColor;
+            
+            yield return null;
+        }
+        activeBoars.RemoveAt(activeBoars.IndexOf(gameObject));
+        Destroy(gameObject);
     }
 }

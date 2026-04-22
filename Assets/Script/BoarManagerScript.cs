@@ -21,10 +21,10 @@ public class BoarManagerScript : MonoBehaviour
     public float boarSpawnSpread = 1;
     public float turnInvisibleRate = 1f;
 
-    List<GameObject> activeBoars = new List<GameObject>();
+    public List<GameObject> activeBoars = new List<GameObject>();
     Coroutine spawnCoroutine;
     Coroutine fadeCoroutine;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,7 +42,7 @@ public class BoarManagerScript : MonoBehaviour
 
     public void InitializeSpawnBoars()
     {
-        if (fadeCoroutine != null) 
+        if (fadeCoroutine != null)
         {
             StopCoroutine(fadeCoroutine);
         }
@@ -52,7 +52,7 @@ public class BoarManagerScript : MonoBehaviour
 
     public void StopSpawnBoars()
     {
-        if (spawnCoroutine != null) 
+        if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
         }
@@ -69,7 +69,7 @@ public class BoarManagerScript : MonoBehaviour
             Vector3 cameraPos = cam.transform.position;
             int nbrOfBoars = Random.Range(minNumberOfBoars, maxNumberOfBoars + 1);
             Vector2 flockSpawnPosition = new Vector2(cameraPos.x + screenWidth + boarWidth + boarSpawnSpread, cameraPos.y + Random.Range(-screenHeight + boarHeight, screenHeight - boarHeight));
-            
+
             for (int i = 0; i < nbrOfBoars; i++)
             {
                 GameObject newBoar = Instantiate(boar, flockSpawnPosition + Random.insideUnitCircle * boarSpawnSpread, Quaternion.identity);
@@ -77,45 +77,19 @@ public class BoarManagerScript : MonoBehaviour
                 activeBoars.Add(newBoar);
             }
 
-            yield return new WaitForSeconds(boarSpawnInterval); 
+            yield return new WaitForSeconds(boarSpawnInterval);
         }
     }
 
     IEnumerator FadeBoars()
     {
-        float currentAlpha = 1f;
-
-        while (currentAlpha > 0f)
+        for (int i = activeBoars.Count - 1; i >= 0; i--)
         {
-            currentAlpha -= turnInvisibleRate * Time.deltaTime;
-
-            for (int i = activeBoars.Count - 1; i >= 0 ; i--)
+            if (activeBoars[i] != null)
             {
-                GameObject currentBoar = activeBoars[i];
-                if (currentBoar != null)
-                {
-                    SpriteRenderer currentBoarSr = currentBoar.GetComponent<SpriteRenderer>();
-                    Color currentBoarColor = currentBoarSr.color;
-                    currentBoarColor.a = currentAlpha;
-                    currentBoarSr.color = currentBoarColor;
-                }
-                else
-                {
-                    activeBoars.RemoveAt(i);
-                }
-            }
-
-            yield return null;
-        }
-
-        foreach (GameObject boar in activeBoars)
-        {
-            if (boar != null) 
-            {
-                Destroy(boar);
+                activeBoars[i].GetComponent<BoarScript>().StartFade();
             }
         }
-        
-        activeBoars.Clear();
+        yield break;
     }
 }

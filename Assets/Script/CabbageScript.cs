@@ -7,7 +7,7 @@ public class CabbageScript : MonoBehaviour
     public float decayRate;
     public float decayAmount;
 
-    Coroutine activeCoroutine;
+    public Coroutine decayCabbage;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,14 +22,13 @@ public class CabbageScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (activeCoroutine != null)
+        if (decayCabbage == null)
         {
-            StopCoroutine(activeCoroutine);
+            decayCabbage = StartCoroutine(DecayCabbage());
         }
-        activeCoroutine = StartCoroutine(DecayCabbage());
     }
 
-    IEnumerator DecayCabbage()
+    public IEnumerator DecayCabbage()
     {
         while (transform.localScale.x >= 0.1f)
         {

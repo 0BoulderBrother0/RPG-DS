@@ -139,6 +139,7 @@ MonoBehaviour:
   cabbageObject: {fileID: 917535368348540530, guid: bcf708b404351149e9bb799362ad901d, type: 3}
   cabbageThrowSpeed: 9
   cabbageRotationSpeed: 25
+  secondsStartCabbageDecay: 1
 --- !u!95 &4406579450491121553
 Animator:
   serializedVersion: 7

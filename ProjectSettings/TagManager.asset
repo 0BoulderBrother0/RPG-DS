@@ -9,6 +9,8 @@ TagManager:
   - Cabbage
   - Boar
   - Plant
+  - BoarManager
+  - Undefined
   layers:
   - Default
   - TransparentFX
